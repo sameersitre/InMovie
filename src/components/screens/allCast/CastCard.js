@@ -15,21 +15,12 @@ class CastCard extends Component {
     super(props);
     this.state = {
       personDetails: null,
-      parentData: null,
     };
   }
 
   componentDidMount() {
     this.setState({personDetails: null});
     this._getData();
-  }
-
-  componentDidUpdate() {
-    if (this.state.parentData !== this.props.parentData) {
-      this.setState({parentData: this.props.parentData});
-      this.setState({personDetails: null});
-      this._getData();
-    }
   }
 
   _getData = async () => {
@@ -51,23 +42,22 @@ class CastCard extends Component {
     const {parentData} = this.props;
     return (
       <TouchableOpacity
-        style={{width: 110, marginHorizontal: 5, marginBottom: 15}}
-        elevation={0}>
-        <Image
-          style={{width: 110, height: 170, borderRadius: 2}}
-          source={{
-            uri: `${TMDB_IMAGE_URI}/w185${this.state.personDetails &&
-              this.state.personDetails.profile_path}`,
-          }}
-        />
+        style={{flex: 1, marginHorizontal: 5, marginBottom: 15, width: '100%'}}>
+        <Card>
+          <Card.Cover
+            source={{
+              uri: `${TMDB_IMAGE_URI}/h632${this.state.personDetails &&
+                this.state.personDetails.profile_path}`,
+            }}
+          />
+          <Caption style={[{fontWeight: 'bold'}, styles.caption]}>
+            {parentData.actor}
+          </Caption>
 
-        <Caption style={{fontWeight: 'bold', textAlign: 'center'}}>
-          {parentData.actor}
-        </Caption>
-
-        <Caption style={[{textAlign: 'center'}, styles.caption]}>
-          {parentData.character || parentData.job}
-        </Caption>
+          <Caption style={[{textAlign: 'center'}, styles.caption]}>
+            {parentData.character || parentData.job}
+          </Caption>
+        </Card>
       </TouchableOpacity>
     );
   }
@@ -76,6 +66,8 @@ class CastCard extends Component {
 const styles = StyleSheet.create({
   caption: {
     color: '#757575',
+    textAlign: 'center',
+    padding: 3,
   },
 });
 

@@ -1,66 +1,71 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { StyleSheet, View, Image, ScrollView, TouchableOpacity, Modal } from 'react-native'
-import { Caption, Card, Button, withTheme } from 'react-native-paper';
-import { getDetails } from '../../../containers/actions/userActions';
-import SeasonEpisodesModal from './SeasonEpisodesModal'
-class Seasons extends Component {
-    state = {
-        modalStatus: false,
-        selectedSeason: null,
-    }
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
 
-    submit = (value) => {
-        this.setState({ modalStatus: true, selectedSeason: value })
-        console.log("object")
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {Caption, Card, withTheme} from 'react-native-paper';
+import {TMDB_IMAGE_URI} from '../../../utils/Config';
 
-    }
-    render() {
-        return (
-            <View style={{ flex: 1, padding: 5 }} >
-                {this.state.modalStatus ?
-                    <SeasonEpisodesModal
-                        hideModal={() => this.setState({ modalStatus: false })}
-                        modalStatus={this.state.modalStatus}
-                        parentData={this.props.parentData}
-                        selectedSeason={this.state.selectedSeason}
-                    />
-                    : null}
-                <Caption style={styles.caption}>Seasons:</Caption>
-                <ScrollView
-                    horizontal={true}
-                    contentContainerStyle={{
-                        // flexWrap: 'wrap',
-                        flexDirection: 'row',
-                    }}  >
-                    {this.props.parentData && this.props.parentData.map((value, i) =>
-                        <TouchableOpacity
-                            key={i}
-                            style={{ width: 120, marginRight: 10, backgroundColor: 'transparent' }}
-                            onPress={() => this.submit(value)}
-                        >
+const Seasons = props => {
+  const detailsData = props.parentData;
 
-                            <Card
-                                elevation={5} >
-                                <Card.Cover
-                                    source={{ uri: `https://image.tmdb.org/t/p/w500${value.poster_path}` }} />
-                            </Card>
-                            <Caption style={styles.caption}>{value.name}</Caption>
-                        </TouchableOpacity>
-                    )}
-                </ScrollView>
-            </View>
-        )
-    }
-}
+  submit = item => {
+    let routeData = {
+      id: detailsData.id,
+      name:detailsData.name,
+      seasonNumber: item.season_number,
+      episodeCount:item.episode_count
+    };
+    props.navigator.navigate('episodes', routeData);
+  };
+
+  return detailsData.seasons ? (
+    <View style={{flex: 1, marginTop: 10}}>
+      <Caption
+        style={[
+          styles.caption,
+          {color: props.theme.colors.primary, paddingHorizontal: 5},
+        ]}>
+        Seasons:
+      </Caption>
+
+      <FlatList
+        horizontal={true}
+        data={detailsData.seasons}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={{width: 120, marginHorizontal: 5}}
+            onPress={() => submit(item)}>
+            <Card elevation={5}>
+              <Card.Cover
+                source={{
+                  uri: `${TMDB_IMAGE_URI}/w342${item.poster_path}`,
+                }}
+              />
+            </Card>
+            <Caption style={styles.caption}>{item.name}</Caption>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
+  ) : null;
+};
+
 const styles = StyleSheet.create({
+  caption: {
+    fontWeight: 'bold',
+  },
+});
 
-    caption: {
-        color: '#757575'
-    },
-})
-
-const mapStateToProps = (state) => ({
-    user: state.user
-})
-export default connect(mapStateToProps, { getDetails })(withTheme(Seasons))
+export default withTheme(Seasons);

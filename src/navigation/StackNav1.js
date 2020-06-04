@@ -1,58 +1,74 @@
-import * as React from 'react';
-import { } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Search from '../components/screens/search/Search';
-import Details from '../components/screens/details/Details';
-import WebViewScreen from '../components/commonComponents/WebViewScreen'
+/*
+ * Author: Sameer Sitre
+ * https://www.linkedin.com/in/sameersitre/
+ * https://github.com/sameersitre
+ * File Description:
+ */
 
-import LinearGradient from 'react-native-linear-gradient'
+import React from 'react';
+import {View} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
+
+import Search from '../components/screens/search/Search';
+import Details from '../components/screens/details/';
+import Episodes from '../components/screens/seasonEpisodes';
+import Recommends from '../components/screens/recommends';
+import AllCast from '../components/screens/allCast/AllCast';
+import WebViewScreen from '../components/commonComponents/WebViewScreen';
+
 const Stack = createStackNavigator();
 
 function StackNav1() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerTintColor: '#FFFFFF',
         headerStyle: {
           backgroundColor: 'transparent',
         },
-         headerTransparent: true,
-        headerBackground: () =>
+        headerTransparent: true,
+        headerBackground: () => (
           <LinearGradient
-            colors={["black", "#00000999", '#00000000']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={{ height: 80 }}
-          />,
-        headerTitleStyle: {
-          // fontWeight: 'bold',
-        },
-      }}
-    >
+            colors={['black', '#00000999', '#00000000']}
+            start={{x: 0, y: 0}}
+            end={{x: 0, y: 1}}
+            style={{height: 80}}
+          />
+        ),
+        headerTitleStyle: {},
+      }}>
       <Stack.Screen
-        name="Home"
-        options={{
-          title: '',
-          // headerStyle:{
-          //   // height:0
-          // },
-           headerBackground:null
-        }}
-        component={Search} />
+        name="search"
+        component={Search}
+        options={{title: '', headerBackground: null}}
+      />
+
+      <Stack.Screen name="details" component={Details} options={{title: ''}} />
 
       <Stack.Screen
-        name="Details"
-        options={{
-          title: 'Details'
-        }}
-        component={Details} />
+        name="recommendations"
+        component={Recommends}
+        options={{title: ''}}
+      />
+
+      <Stack.Screen
+        name="episodes"
+        component={Episodes}
+        options={{title: ''}}
+      />
+      <Stack.Screen name="allcast" component={AllCast} options={{title: ''}} />
 
       <Stack.Screen
         name="webview"
+        component={WebViewScreen}
         options={{
-          // title: 'webview'
+          title: '',
+          headerBackground: () => (
+            <View style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', height: 70}} />
+          ),
         }}
-        component={WebViewScreen} />
-
+      />
     </Stack.Navigator>
   );
 }

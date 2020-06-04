@@ -1,31 +1,21 @@
+/*
+ * Author: Sameer Sitre
+ * https://www.linkedin.com/in/sameersitre/
+ * https://github.com/sameersitre
+ * File Description:
+ */
 
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { WebView } from 'react-native-webview';
-import { StyleSheet, Text, View } from 'react-native';
-export class WebViewScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            imdb: this.props.route.params.imdbId
-        }
-    }
-    componentDidMount() {
-        console.log("checkURL: ", this.props.route.params.URL)
-    }
-    render() {
-        return (
-            <WebView
-                javaScriptEnabled={true}
-                style={{ flex: 1, marginTop: 90 }}
-                source={{ uri: this.props.route.params.URL }} />
-
-        )
-    }
+import React, {Component} from 'react';
+import {WebView} from 'react-native-webview';
+class WebViewScreen extends Component {
+  render() {
+    return (
+      <WebView
+        style={{marginTop: 70}}
+        javaScriptEnabled={true}
+        source={{uri: this.props.route.params.URL}}
+      />
+    );
+  }
 }
-
-const mapStateToProps = (state) => ({})
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WebViewScreen)
+export default WebViewScreen;

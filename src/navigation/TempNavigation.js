@@ -1,9 +1,15 @@
-import * as React from 'react';
-import { } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack'; 
-import Temporary from '../components/screens/temporary/Temporary'
-import Details from '../components/screens/details/Details'
-import WebViewScreen from '../components/commonComponents/WebViewScreen'
+/*
+ * Author: Sameer Sitre
+ * https://www.linkedin.com/in/sameersitre/
+ * https://github.com/sameersitre
+ * File Description:
+ */
+
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import Temporary from '../components/screens/temporary/Temporary';
+import Details from '../components/screens/details/Details';
+import WebViewScreen from '../components/commonComponents/WebViewScreen';
 
 const Stack = createStackNavigator();
 

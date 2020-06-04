@@ -1,54 +1,54 @@
-import React from 'react'
-import { View, StyleSheet, ScrollView, ImageBackground, Animated, TouchableOpacity, Linking, Image } from 'react-native'
-import {
-    Title, Subheading, Paragraph, Caption, Text, withTheme, TouchableRipple, Button,
-    ActivityIndicator, Colors, Chip, Dialog, Portal
-} from 'react-native-paper';
-import { connect } from 'react-redux'
+/*
+  * Author: Sameer Sitre
+  * https://www.linkedin.com/in/sameersitre/
+  * https://github.com/sameersitre
+  * File Description:  
+ */
 
-import Reactotron from 'reactotron-react-native'
+import React from 'react';
+import {View, StyleSheet, ScrollView, Linking} from 'react-native';
+import {Caption, withTheme, Button} from 'react-native-paper';
 
-const Videos = (props) => {
-    return (
+const Videos = props => {
+  const detailsData = props.parentData;
+  return detailsData.length > 0 ? (
+    <View style={{flex: 1, marginTop: 10}}>
+      <Caption
+        style={[
+          styles.caption,
+          {color: props.theme.colors.primary, paddingHorizontal: 5},
+        ]}>
+        Trailers/ Videos:
+      </Caption>
 
-        <View style={{  }} >
-             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 5 }}>
-                  <Caption style={styles.caption}>Trailers / Videos:</Caption>
+      <ScrollView
+        horizontal={true}
+        contentContainerStyle={{
+          maxHeight: 85,
+          flexWrap: 'wrap',
+          flexDirection: 'column',
+        }}>
+        {detailsData.map((value, i) => (
+          <Button
+            key={i}
+            mode="text"
+            onPress={() =>
+              Linking.openURL(
+                `vnd.youtube://www.youtube.com/embed/${value.key}`,
+              )
+            }>
+            <Caption>{`${i + 1}.${value.type}`}</Caption>
+          </Button>
+        ))}
+      </ScrollView>
+    </View>
+  ) : null;
+};
 
-            </View>
-           
-            <ScrollView
-                horizontal={true}
-                contentContainerStyle={{
-                    maxHeight: 85, flexWrap: 'wrap',
-                    flexDirection: 'column',
-                }}  >
-                { props.user.details_data.videoData.map((value, i) =>
-                    <Button
-                        key={i}
-                        color="#FFFFFF"
-                        compact={true}
-                        style={[styles.textShadow, { backgroundColor: 'rgba(0, 0, 0, 0.6)', margin: 2, alignSelf: 'baseline' }]}
-                        onPress={() =>
-                            Linking.openURL(`vnd.youtube://www.youtube.com/embed/${value.key}`)
-                        }>
-                        {`${i + 1}.${value.type}`}
-                    </Button>
-                )}
-            </ScrollView>
-        </View>
-    )
-}
+const styles = StyleSheet.create({
+  caption: {
+    fontWeight: 'bold',
+  },
+});
 
-
-//export default Videos
-
-const styles = StyleSheet.create({})
-
-
-
-const mapStateToProps = (state) => ({
-    user: state.user
-})
-
-export default connect(mapStateToProps)(Videos)
+export default withTheme(Videos);
