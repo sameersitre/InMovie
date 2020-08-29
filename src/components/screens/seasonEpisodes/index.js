@@ -5,16 +5,13 @@
  * File Description:
  */
 
-import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
-import {Title, Caption, withTheme, Card} from 'react-native-paper';
-import axios from 'axios';
-import {
-  main_url,
-  TMDB_API_KEY,
-  TMDB_URI,
-  TMDB_IMAGE_URI,
-} from '../../../utils/Config';
+import React, { Component } from 'react';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import { Title, Caption, withTheme, Card } from 'react-native-paper';
+
+import apiCall from '../../../services/apiCall'
+import { getSeasonsURL } from '../../../services/apiURL';
+import { TMDB_IMAGE_URI } from '../../../utils/Config';
 class SeasonEpisodes extends Component {
   state = {
     data: [],
@@ -22,25 +19,14 @@ class SeasonEpisodes extends Component {
     selectedSeason: 1,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ loading: true, data: [] });
     let params = {
       id: this.props.route.params.id,
       seasonNumber: this.props.route.params.seasonNumber,
     };
-    this.setState({loading: true, data: []});
-    axios
-      .get(
-        `${TMDB_URI}/tv/${params.id}/season/${
-          params.seasonNumber
-        }?api_key=${TMDB_API_KEY}&language=en-US`,
-      )
-      .then(res => {
-        this.setState({data: res.data, loading: false});
-      })
-      .catch(function(error) {
-        console.log(error);
-        this.setState({loading: false});
-      });
+    let apiData = await apiCall(getSeasonsURL, params)
+    this.setState({ data: apiData, loading: false });
   }
 
   SeasonCard = data => (
@@ -56,7 +42,7 @@ class SeasonEpisodes extends Component {
           uri: `${TMDB_IMAGE_URI}/w780${data.value.still_path}`,
         }}
       />
-      <Caption style={[styles.caption, {padding: 8}]}>
+      <Caption style={[styles.caption, { padding: 8 }]}>
         Episode: {data.value.episode_number}: {data.value.name}
         {'\n'}
         Ratings: {data.value.vote_average}
@@ -71,12 +57,12 @@ class SeasonEpisodes extends Component {
 
   render() {
     const themeColors = this.props.theme.colors;
-    const {name, episodeCount} = this.props.route.params;
-
-    if (this.state.loading)
+    const { name } = this.props.route.params;
+    const { data, loading } = this.state
+    if (loading)
       return (
         <ActivityIndicator
-          style={{flex: 1, alignSelf: 'center'}}
+          style={{ flex: 1, alignSelf: 'center' }}
           size="large"
           color={themeColors.primary}
         />
@@ -96,33 +82,21 @@ class SeasonEpisodes extends Component {
               flexDirection: 'row',
               alignItems: 'baseline',
             }}>
-            <Title style={{color: '#E5CA49'}}>{name}&nbsp;</Title>
-            <Caption style={styles.caption}>{this.state.data.name}</Caption>
+            <Title style={{ color: '#E5CA49' }}>{name}&nbsp;</Title>
+            <Caption style={styles.caption}>{data.name}</Caption>
           </View>
         </View>
-
-        {/* <View style={{ padding: 50}}>
-            <Title
-              style={[styles.caption, { color: '#E5CA49'}]}>
-              {name}
-            </Title>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <Caption style={styles.caption}>{this.state.data.name}</Caption>
-              <Caption style={styles.caption}>Episodes: {episodeCount}</Caption>
-            </View>
-          </View> */}
 
         <FlatList
           contentContainerStyle={{}}
           numColumns={1}
-          data={this.state.data && this.state.data.episodes}
+          data={data.episodes}
           extraData={this.state}
           keyExtractor={item => item.id}
           ref={ref => {
             this.flatList_Ref = ref; // <------ ADD Ref for the Flatlist
           }}
-          renderItem={({item}) => <this.SeasonCard value={item} />}
+          renderItem={({ item }) => <this.SeasonCard value={item} />}
         />
       </View>
     );
@@ -133,7 +107,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   caption: {
     color: '#757575',
   },

@@ -5,7 +5,7 @@
   * File Description:  
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -13,16 +13,15 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Caption, withTheme, Button} from 'react-native-paper';
-import {connect} from 'react-redux';
-import {TMDB_IMAGE_URI} from '../../../utils/Config';
+import { Caption, withTheme, Button } from 'react-native-paper';
+import { TMDB_IMAGE_URI } from '../../../utils/Config';
 
 RecommendList = props => {
   const themeColors = props.theme.colors;
-  const {id, media_type, recommends, navigator} = props.parentData;
+  const { recommends, navigator } = props
 
   _renderFooter = () => {
-    return recommends.length > 4 ? (
+    return recommends?.results.length > 4 ? (
       <View
         style={{
           flex: 1,
@@ -36,7 +35,7 @@ RecommendList = props => {
           color={themeColors.primary}
           onPress={() =>
             navigator.navigate('recommendations', {
-              routeData: props.parentData,
+              routeData: recommends,
             })
           }>
           View All
@@ -45,25 +44,26 @@ RecommendList = props => {
     ) : null;
   };
 
-  return recommends.length > 0 ? (
-    <View style={{flex: 1}}>
+  return (
+    <View style={{ flex: 1 }}>
       <Caption
         style={[
           styles.caption,
-          {color: themeColors.primary, paddingHorizontal: 5},
+          { color: themeColors.primary, paddingHorizontal: 5 },
         ]}>
         More like this:
       </Caption>
+
       <FlatList
         horizontal={true}
-        data={recommends && recommends.slice(0, 5)}
+        data={recommends.results.slice(0, 5)}
         extraData={this.state}
         keyExtractor={item => item.id}
         ref={ref => {
           this.flatList_Ref = ref; // <------ ADD Ref for the Flatlist
         }}
         ListFooterComponent={this._renderFooter}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigator.navigate('details', item)}
             style={{
@@ -86,7 +86,7 @@ RecommendList = props => {
         )}
       />
     </View>
-  ) : null;
+  )
 };
 
 const styles = StyleSheet.create({
@@ -97,8 +97,6 @@ const styles = StyleSheet.create({
     // textShadowRadius: 10
   },
 });
-const mapStateToProps = state => ({
-  user: state.user,
-});
 
-export default connect(mapStateToProps)(withTheme(RecommendList));
+
+export default withTheme(RecommendList)

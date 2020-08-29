@@ -5,9 +5,9 @@
  * File Description:
  */
 
-import React, {Component} from 'react';
-import {View, StyleSheet, StatusBar, ScrollView} from 'react-native';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { View, StyleSheet, StatusBar, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import {
   Subheading,
   Divider,
@@ -21,7 +21,8 @@ import {
   switchAdultAction,
 } from '../../../containers/actions/userActions';
 import ColorSelect from './ColorsSelect';
-import SignIn from './SignIn'
+import SignIn from './SignIn';
+import CountryPicker from './CountryPicker'
 class Settings extends Component {
   state = {
     isDarkSwitchOn: true,
@@ -38,22 +39,22 @@ class Settings extends Component {
 
   _onToggleAdultSwitch = () => {
     let changer = this.state.isAdultSwitchOn;
-    this.setState({isAdultSwitchOn: !this.state.isAdultSwitchOn});
+    this.setState({ isAdultSwitchOn: !this.state.isAdultSwitchOn });
     this.props.switchAdultAction(!changer);
   };
 
   _onToggleDarkSwitch = () => {
     let changer = this.state.isDarkSwitchOn;
-    this.setState({isDarkSwitchOn: !changer});
+    this.setState({ isDarkSwitchOn: !changer });
     this.props.setThemeAction(!changer);
   };
 
   render() {
-    const {isAdultSwitchOn, isDarkSwitchOn, showAdultToogle} = this.state;
+    const { isAdultSwitchOn, isDarkSwitchOn, showAdultToogle } = this.state;
     const colors = this.props.theme.colors;
     const darkTheme = this.props.user.switch_theme;
     return (
-      <ScrollView style={{flex: 1, padding: 15, paddingTop: 90}}>
+      <ScrollView style={{ flex: 1, padding: 15, paddingTop: 90 }}>
         <StatusBar barStyle="light-content" />
         <Divider />
         <View style={styles.bar}>
@@ -63,7 +64,7 @@ class Settings extends Component {
           </View>
           <View>
             <Switch
-              trackColor={{true: colors.primary}}
+              trackColor={{ true: colors.primary }}
               value={isDarkSwitchOn}
               onValueChange={this._onToggleDarkSwitch}
             />
@@ -83,7 +84,7 @@ class Settings extends Component {
             </View>
             <View>
               <Switch
-                trackColor={{true: colors.primary}}
+                trackColor={{ true: colors.primary }}
                 value={isAdultSwitchOn}
                 onValueChange={this._onToggleAdultSwitch}
               />
@@ -93,10 +94,29 @@ class Settings extends Component {
         <Divider />
         <View style={styles.bar}>
           <View>
+            <Subheading>Country Region:</Subheading>
+            <Caption
+              onPress={() =>
+                this.setState({ showAdultToogle: !showAdultToogle })
+              }>
+              Select Country
+            </Caption>
+          </View>
+          <View>
+            <CountryPicker />
+            {/* <Button mode="outlined" onPress={() => console.log('object')}>
+              Login
+            </Button> */}
+          </View>
+        </View>
+
+        <Divider />
+        <View style={styles.bar}>
+          <View>
             <Subheading>Account</Subheading>
             <Caption
               onPress={() =>
-                this.setState({showAdultToogle: !showAdultToogle})
+                this.setState({ showAdultToogle: !showAdultToogle })
               }>
               Sign In
             </Caption>
@@ -107,7 +127,6 @@ class Settings extends Component {
             </Button>
           </View>
         </View>
-
         <Divider />
         {/* <SignIn/> */}
       </ScrollView>
@@ -129,5 +148,5 @@ const styles = StyleSheet.create({
 
 export default connect(
   mapStateToProps,
-  {setThemeAction, switchAdultAction},
+  { setThemeAction, switchAdultAction },
 )(withTheme(Settings));

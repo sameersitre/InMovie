@@ -5,26 +5,26 @@
  * File Description:
  */
 
-import React, {PureComponent} from 'react';
-import {Card, withTheme} from 'react-native-paper';
-import {TouchableOpacity} from 'react-native';
-import ModalDisplay from '../commonComponents/ModalDisplay';
-import {TMDB_IMAGE_URI} from '../../utils/Config';
+import React, { PureComponent } from 'react';
+import { Card, withTheme } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native';
+import ModalDisplay from './ModalDisplay';
+import { TMDB_IMAGE_URI } from '../../utils/Config';
 
 class CardView extends PureComponent {
   state = {
     modalStatus: false,
   };
   _nav = () => {
-    this.setState({modalStatus: true});
+    this.setState({ modalStatus: true });
   };
 
   render() {
-    const {parentData, navigator} = this.props;
-    console.tron.log(`card render! `);
+    const { parentData, navigator } = this.props;
+    const { modalStatus } = this.state
     return (
       <TouchableOpacity
-        style={{width: '31.7%', margin: '0.8%'}}
+        style={{ width: '31.7%', margin: '0.8%' }}
         onPress={() => this.props.navigator.navigate('details', parentData)}
         onLongPress={this._nav}>
         <Card elevation={2}>
@@ -37,12 +37,15 @@ class CardView extends PureComponent {
             />
           )}
         </Card>
-        <ModalDisplay
-          hideModal={() => this.setState({modalStatus: false})}
-          modalStatus={this.state.modalStatus}
-          parentData={parentData}
-          navigator={navigator}
-        />
+
+        {modalStatus ?
+          <ModalDisplay
+            hideModal={() => this.setState({ modalStatus: false })}
+            modalStatus={modalStatus}
+            parentData={parentData}
+            navigator={navigator}
+          />
+          : null}
       </TouchableOpacity>
     );
   }

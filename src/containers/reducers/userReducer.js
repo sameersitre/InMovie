@@ -9,7 +9,7 @@ import {
   SWITCH_THEME,
   SWITCH_ADULT,
   MOVIE_DATA,
-  PRIMARY_COLOR,
+  PRIMARY_COLOR, USER_INFO, USER_REGION
 } from '../actions/types';
 import genres from '../../utils/Genres';
 
@@ -19,15 +19,15 @@ const initialState = {
   switch_adult: false,
   primary_color: 1,
   color_palete: [
-    {id: 1, color: '#E33F05'},
-    {id: 2, color: '#6200EE'},
-    {id: 3, color: '#3479F6'},
-    {id: 4, color: '#78B857'},
-    {id: 5, color: '#FF0266'},
+    { id: 1, color: '#E33F05' },
+    { id: 2, color: '#6200EE' },
+    { id: 3, color: '#3479F6' },
+    { id: 4, color: '#78B857' },
+    { id: 5, color: '#FF0266' },
   ],
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SWITCH_THEME:
       return {
@@ -48,6 +48,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         movie_data: action.payload,
+      };
+    case USER_INFO:
+      return {
+        ...state,
+        user_info: action.payload,
+      };
+    case USER_REGION:
+      return {
+        ...state,
+        user_region: action.payload,
       };
 
     default:

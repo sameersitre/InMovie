@@ -5,7 +5,7 @@
  * File Description:
  */
 
-import {createStore, applyMiddleware, compose} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import appReducer from './containers/reducers';
 
@@ -23,7 +23,8 @@ const store = createStore(
   compose(
     applyMiddleware(...middleware),
     Reactotron.createEnhancer(), //comment out on production
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()   //comment out on production
+  //  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+
   ),
 );
 export default store;

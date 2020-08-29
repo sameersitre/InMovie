@@ -6,13 +6,13 @@
  */
 
 import React from 'react';
-import {View, FlatList} from 'react-native';
-import {Caption, withTheme, Button} from 'react-native-paper';
+import { View, FlatList } from 'react-native';
+import { Caption, withTheme, Button } from 'react-native-paper';
 import CastCard from './CastCard';
 
 const Cast = props => {
   const themeColors = props.theme.colors;
-  const {castList, navigator} = props.parentData;
+  const { castList, navigator } = props
   _renderFooter = () => {
     return castList ? (
       <View
@@ -24,7 +24,7 @@ const Cast = props => {
           justifyContent: 'center',
         }}>
         <Button
-          onPress={() => navigator.navigate('allcast',props.parentData)}
+          onPress={() => navigator.navigate('allcast', castList)}
           mode="contained"
           color={themeColors.primary}>
           View All
@@ -34,7 +34,7 @@ const Cast = props => {
   };
 
   return (
-    <View style={{flex: 1, marginTop: 10}}>
+    <View style={{ flex: 1, marginTop: 10 }}>
       <Caption
         style={{
           color: props.theme.colors.primary,
@@ -45,10 +45,10 @@ const Cast = props => {
       </Caption>
       <FlatList
         horizontal={true}
-        data={castList && castList.cast.slice(0, 5)}
-        keyExtractor={item => item.id}
+        data={castList.cast.slice(0, 5)}
+        keyExtractor={(item, index) => index}
         ListFooterComponent={_renderFooter}
-        renderItem={({item}) => <CastCard parentData={item} />}
+        renderItem={({ item }) => <CastCard parentData={item} />}
       />
     </View>
   );

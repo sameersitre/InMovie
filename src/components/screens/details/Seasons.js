@@ -5,7 +5,7 @@
   * File Description:  
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -13,8 +13,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Caption, Card, withTheme} from 'react-native-paper';
-import {TMDB_IMAGE_URI} from '../../../utils/Config';
+import { Caption, Card, withTheme } from 'react-native-paper';
+import { TMDB_IMAGE_URI } from '../../../utils/Config';
 
 const Seasons = props => {
   const detailsData = props.parentData;
@@ -22,19 +22,19 @@ const Seasons = props => {
   submit = item => {
     let routeData = {
       id: detailsData.id,
-      name:detailsData.name,
+      name: detailsData.name,
       seasonNumber: item.season_number,
-      episodeCount:item.episode_count
+      episodeCount: item.episode_count
     };
     props.navigator.navigate('episodes', routeData);
   };
 
-  return detailsData.seasons ? (
-    <View style={{flex: 1, marginTop: 10}}>
+  return (
+    <View style={{ flex: 1, marginTop: 10 }}>
       <Caption
         style={[
           styles.caption,
-          {color: props.theme.colors.primary, paddingHorizontal: 5},
+          { color: props.theme.colors.primary, paddingHorizontal: 5 },
         ]}>
         Seasons:
       </Caption>
@@ -43,9 +43,9 @@ const Seasons = props => {
         horizontal={true}
         data={detailsData.seasons}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
-            style={{width: 120, marginHorizontal: 5}}
+            style={{ width: 120, marginHorizontal: 5 }}
             onPress={() => submit(item)}>
             <Card elevation={5}>
               <Card.Cover
@@ -59,7 +59,7 @@ const Seasons = props => {
         )}
       />
     </View>
-  ) : null;
+  )
 };
 
 const styles = StyleSheet.create({

@@ -6,17 +6,17 @@
  */
 
 import React from 'react';
-import {View, StyleSheet, ScrollView, Linking} from 'react-native';
-import {Caption, withTheme, Button} from 'react-native-paper';
+import { View, StyleSheet, ScrollView, Linking } from 'react-native';
+import { Caption, withTheme, Button } from 'react-native-paper';
 
 const Videos = props => {
   const detailsData = props.parentData;
-  return detailsData.length > 0 ? (
-    <View style={{flex: 1, marginTop: 10}}>
+  return (
+    <View style={{ flex: 1, marginTop: 10 }}>
       <Caption
         style={[
           styles.caption,
-          {color: props.theme.colors.primary, paddingHorizontal: 5},
+          { color: props.theme.colors.primary, paddingHorizontal: 5 },
         ]}>
         Trailers/ Videos:
       </Caption>
@@ -32,7 +32,7 @@ const Videos = props => {
           <Button
             key={i}
             mode="text"
-            onPress={() =>
+            onPress={() => 
               Linking.openURL(
                 `vnd.youtube://www.youtube.com/embed/${value.key}`,
               )
@@ -42,7 +42,7 @@ const Videos = props => {
         ))}
       </ScrollView>
     </View>
-  ) : null;
+  )
 };
 
 const styles = StyleSheet.create({

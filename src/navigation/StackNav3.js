@@ -6,9 +6,10 @@
  */
 
 import React from 'react';
-import {View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Settings from '../components/screens/settings/Settings';
+import GradientHeader from '../components/common/GradientHeader'
+
 const Stack = createStackNavigator();
 function StackNav3() {
   return (
@@ -18,9 +19,7 @@ function StackNav3() {
         options={{
           headerTintColor: '#FFFFFF',
           title: 'Settings',
-          headerBackground: () => (
-            <View style={{backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 70}} />
-          ),
+          headerBackground: () => <GradientHeader />
         }}
         component={Settings}
       />

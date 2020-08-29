@@ -5,52 +5,70 @@
  * File Description:
  */
 
-import React, {Component} from 'react';
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
+import React, { PureComponent } from 'react';
+import { 
+  StyleSheet, 
+  InteractionManager,
+
   View,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {Title, Caption, withTheme, Button, Card} from 'react-native-paper';
-import {connect} from 'react-redux';
+import { Title, Caption, withTheme, Button, Card } from 'react-native-paper';
+import { connect } from 'react-redux';
 import CastCard from './CastCard';
+import moment from 'moment';
 
-AllCast = props => {
-  const {castList} = props.route.params;
-  return (
-    <View style={styles.centeredView}>
-      <View
-        style={{
-          width: '100%',
-          padding: 5,
-          paddingTop: 50,
-        }}>
-        <Caption style={styles.caption}>CAST:</Caption>
-
+class AllCast extends PureComponent {
+  state = {
+    loading: true
+  }
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ loading: false });
+    });
+  }
+  render() {
+    const themeColors = this.props.theme.colors;
+    const { cast, name, title, year, first_air_date, } = this.props.route.params
+    if (this.state.loading)
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={themeColors.primary} />
+        </View>
+      );
+    return (
+      <View style={styles.centeredView}>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'baseline',
-            // justifyContent: 'center',
+            width: '100%',
+            padding: 5,
+            paddingTop: 50,
           }}>
-          <Title style={{color: '#E5CA49'}}>{castList.title}</Title>
-          <Caption style={styles.caption}>{castList.year}</Caption>
-        </View>
-      </View>
+          <Caption style={styles.caption}>CAST:</Caption>
 
-      <FlatList
-        contentContainerStyle={{}}
-        numColumns={2}
-        data={castList && castList.cast}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => <CastCard parentData={item} />}
-      />
-    </View>
-  );
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'baseline',
+              // justifyContent: 'center',
+            }}>
+            <Title style={{ color: '#E5CA49' }}>{title || name} &nbsp;</Title>
+            <Caption style={styles.caption}>
+              {moment(year || first_air_date).format('YYYY')}</Caption>
+          </View>
+        </View>
+
+        <FlatList
+          contentContainerStyle={{}}
+          numColumns={3}
+          data={cast}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <CastCard parentData={item} />}
+        />
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

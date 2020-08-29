@@ -9,21 +9,29 @@ import {
   SWITCH_THEME,
   SWITCH_ADULT,
   PRIMARY_COLOR,
-  MOVIE_DATA,
+  MOVIE_DATA, USER_INFO, USER_REGION
 } from './types';
-import axios from 'axios';
-import {main_url} from '../../utils/Config';
+import { filterURL } from '../../services/apiURL';
+import apiCall from '../../services/apiCall';
 
 export const setThemeAction = data => dispatch => {
-  dispatch({type: SWITCH_THEME, payload: data});
+  dispatch({ type: SWITCH_THEME, payload: data });
 };
 
 export const setColorAction = data => dispatch => {
-  dispatch({type: PRIMARY_COLOR, payload: data});
+  dispatch({ type: PRIMARY_COLOR, payload: data });
 };
 
 export const switchAdultAction = data => dispatch => {
-  dispatch({type: SWITCH_ADULT, payload: data});
+  dispatch({ type: SWITCH_ADULT, payload: data });
+};
+
+export const setUserInfo = data => dispatch => {
+  dispatch({ type: USER_INFO, payload: data });
+};
+
+export const setUserRegion = data => dispatch => {
+  dispatch({ type: USER_REGION, payload: data });
 };
 
 export const filterMovieData = data => async dispatch => {
@@ -32,16 +40,11 @@ export const filterMovieData = data => async dispatch => {
     genreArray.push(data[i].id);
   }
   let genreString = genreArray.join('%2C');
-  let params = {genres: genreString};
-  await axios
-    .post(`${main_url}/filter`, params)
-    .then(res => {
-      dispatch({
-        type: MOVIE_DATA,
-        payload: res.data.results,
-      });
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+  let params = { genres: genreString };
+
+  let resData = await apiCall(filterURL, params)
+  dispatch({
+    type: MOVIE_DATA,
+    payload: resData.results,
+  });
 };
