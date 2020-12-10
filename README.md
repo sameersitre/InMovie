@@ -13,7 +13,7 @@
 > react-native, redux, react-native-paper, axios...
 
 **Cloud:**
-> AWS EC2, lambda function, DynamoDB, aws load balancer, amazon certificate manager(SSL), security groups(firewall settings)
+> AWS EC2, lambda function, mongoDB, aws load balancer, amazon certificate manager(SSL), security groups(firewall settings)
 
 **Backend Implementations for AWS:**
 >nodejs, serverless
