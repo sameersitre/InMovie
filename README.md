@@ -3,7 +3,7 @@
 
 > LIVE LINK:	
 
-> <strong>WebApp: </strong> https://bingefeast.in
+> <strong>WebApp: </strong> https://bingefeast.in/routedFrom=github
 
 > <strong>Mobile App: </strong> https://play.google.com/store/apps/details?id=com.bingefeast
 
