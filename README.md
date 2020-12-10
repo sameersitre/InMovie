@@ -2,15 +2,14 @@
 > android and ios folders and config.js file is gitignored.
 
 > LIVE LINK:	
-```markdown
-WebApp: https://bingefeast.in/routedFrom=github
+> WebApp: https://bingefeast.in/routedFrom=github
 
-Mobile App: https://play.google.com/store/apps/details?id=com.bingefeast
-```
-> APIS used:
->TMDB, IMDB
+> Mobile App: https://play.google.com/store/apps/details?id=com.bingefeast
 
-> Libraries:
+**APIS used:**
+> TMDB, IMDB
+
+**Libraries:**
 > react-native, redux, react-native-paper, axios...
 
 > Cloud: 
