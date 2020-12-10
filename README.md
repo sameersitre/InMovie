@@ -12,10 +12,10 @@
 **Libraries:**
 > react-native, redux, react-native-paper, axios...
 
-> Cloud: 
+**Cloud:**
 > AWS EC2, lambda function, DynamoDB, aws load balancer, amazon certificate manager(SSL), security groups(firewall settings)
 
->Backend Implementations for AWS:
+**Backend Implementations for AWS:**
 >nodejs, serverless
 
 ###### The app is made in #100dayscode. STAY HOME, BE SAFE.
