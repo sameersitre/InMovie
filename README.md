@@ -2,11 +2,11 @@
 > android and ios folders and config.js file is gitignored.
 
 > LIVE LINK:	
+```markdown
+WebApp: https://bingefeast.in/routedFrom=github
 
-> <strong>WebApp: </strong> https://bingefeast.in/routedFrom=github
-
-> <strong>Mobile App: </strong> https://play.google.com/store/apps/details?id=com.bingefeast
-
+Mobile App: https://play.google.com/store/apps/details?id=com.bingefeast
+```
 > APIS used:
 >TMDB, IMDB
 
