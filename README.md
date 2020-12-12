@@ -13,9 +13,9 @@
 > react-native, redux, react-native-paper, axios...
 
 **Cloud:**
-> AWS EC2, lambda function, mongoDB, aws load balancer, amazon certificate manager(SSL), security groups(firewall settings)
+> AWS EC2, lambda function, aws load balancer, amazon certificate manager(SSL), security groups(firewall settings)
 
 **Backend Implementations for AWS:**
->nodejs, serverless
+>nodejs, expressjs, express-validator, mongoDB, serverless
 
 ###### The app is made in #100dayscode. STAY HOME, BE SAFE.
